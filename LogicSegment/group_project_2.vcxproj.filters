@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Mytools">
+      <UniqueIdentifier>{9ff083a0-608f-42bc-a70a-72474e73ef10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mytools">
+      <UniqueIdentifier>{878c4967-a140-4457-89e5-2cd004f9ccd7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Windowcompli.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="op_amp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Buttons.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Size_parameter.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Sfilters.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Inverting_op.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Ni_op_amp.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="Photodiode.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+    <ClCompile Include="DOA.cpp">
+      <Filter>Source Files\Mytools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Windowcompli.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Buttons.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Size_parameter.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Sfilters.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Ni_op_amp.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Inverting_op.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="DOA.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+    <ClInclude Include="Photodiode.h">
+      <Filter>Header Files\Mytools</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

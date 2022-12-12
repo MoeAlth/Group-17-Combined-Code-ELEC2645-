@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Farhan Tanvir">
+      <UniqueIdentifier>{4462cb45-2635-46f5-a3d1-43f182ff05e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mohammed Althagafi">
+      <UniqueIdentifier>{374bdd89-55e1-4372-8d35-43795eef2af1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mohammed Althagafi">
+      <UniqueIdentifier>{5629af70-f129-49e1-aef2-e8a6f442ed50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Will">
+      <UniqueIdentifier>{d14bdcc4-f4c8-40a0-aa65-404c7bb397f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Will">
+      <UniqueIdentifier>{5090fd63-ed4b-4c77-9ed7-f4f1340c27ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Farhan Tanvir">
+      <UniqueIdentifier>{e257a98c-0809-45d8-bcfa-52f4868fb0c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\Farhan Tanvir</Filter>
+    </ClInclude>
+    <ClInclude Include="Display.h">
+      <Filter>Header Files\Farhan Tanvir</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager.h">
+      <Filter>Header Files\Farhan Tanvir</Filter>
+    </ClInclude>
+    <ClInclude Include="PButtons.h">
+      <Filter>Header Files\Farhan Tanvir</Filter>
+    </ClInclude>
+    <ClInclude Include="Setting.h">
+      <Filter>Header Files\Farhan Tanvir</Filter>
+    </ClInclude>
+    <ClInclude Include="Windowx.h">
+      <Filter>Header Files\Mohammed Althagafi</Filter>
+    </ClInclude>
+    <ClInclude Include="olcPixelGameEngine.h">
+      <Filter>Header Files\Mohammed Althagafi</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Windowcompli.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Ni_op_amp.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Sfilters.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Buttons.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Photodiode.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="DOA.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Inverting_op.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+    <ClInclude Include="Size_parameter.h">
+      <Filter>Header Files\Will</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Display.cpp">
+      <Filter>Source Files\Farhan Tanvir</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager.cpp">
+      <Filter>Source Files\Farhan Tanvir</Filter>
+    </ClCompile>
+    <ClCompile Include="PButtons.cpp">
+      <Filter>Source Files\Farhan Tanvir</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Setting.cpp">
+      <Filter>Source Files\Farhan Tanvir</Filter>
+    </ClCompile>
+    <ClCompile Include="Windowx.cpp">
+      <Filter>Source Files\Mohammed Althagafi</Filter>
+    </ClCompile>
+    <ClCompile Include="Buttons.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="DOA.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Inverting_op.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Ni_op_amp.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="op_amp.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Photodiode.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Pic_inver.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Inputbar.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Table.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Sfilters.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Windowcompli.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+    <ClCompile Include="Size_parameter.cpp">
+      <Filter>Source Files\Will</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="chebyshev_filter.jpg">
+      <Filter>Header Files\Will</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
