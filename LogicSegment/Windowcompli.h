@@ -1,11 +1,10 @@
 #pragma once
-#include "Window.h"
+#include "Windows.h"
 #include "easyx.h"
 #include  <vector>
 #include "Buttons.h"
 #include"Sfilters.h"
 #include"Table.h"
-#include"Inputbar.h"
 #include"Ni_op_amp.h"
 #include<graphics.h>
 #include<conio.h>
@@ -24,7 +23,7 @@ class Windowcompli
 		Photodiodes_calculation,
 		D_OP_AMP_calculation,
 		Menu = 66
-	
+
 	};
 public:
 	Windowcompli();
@@ -35,14 +34,13 @@ public:
 	void Inverting_op_amp();
 	void Filters();
 	void Photodiode_circuit();
-	void Active_Peak_dector();
 	void Differential_op_amp();
-	
+
 
 	void probackground();
 	void eventloop();
 	// for sallenkey fillter table reading purpose.
-	void Readfile(const std::string & FileName);
+	void Readfile(const std::string& FileName);
 	//void Savefile(const std::string & FileName);
 
 	IMAGE m_prb;//used to produce the backbround of the window.
@@ -55,7 +53,7 @@ private:
 	std::vector<Sfilters> vec_fil;
 
 	//for filter table
-	
+
 	Table* m_showtable;
 	// To represent all the function that Non-invering_op_amp has:
 	Ni_op_amp* m_showfunction;

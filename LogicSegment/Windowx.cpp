@@ -2,15 +2,12 @@
 #include <math.h>
 #include "Windowx.h"
 #include "olcPixelGameEngine.h"
-#include <map>
 #include <cmath>
 #include <iostream>
 #include <complex>
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <sstream>
-#include <random>
 
 using namespace std;
 std::string userInput;
@@ -20,9 +17,8 @@ typedef std::complex<double> complex;
 
 // Enum for different wave types
 enum class WaveType {
+	// adding more functions in the future 
 	SQUARE,
-	SAWTOOTH,
-	TRIANGLE,
 };
 
 // Forward declaration of the FourierSeries class
@@ -60,8 +56,6 @@ public:
 
 		double f{};
 
-
-
 		waveType = WaveType::SQUARE;
 		for (int i = 0; i < 1000; i++) {
 			// Calculate the value of x
@@ -71,12 +65,7 @@ public:
 			case WaveType::SQUARE:
 				f = std::copysign(1.0, std::sin(x));
 				break;
-			case WaveType::SAWTOOTH:
-				f = (2.0 / M_PI) * std::atan(1.0 / std::tan(x));
-				break;
-			case WaveType::TRIANGLE:
-				f = std::abs(2.0 / M_PI * std::asin(std::sin(x)));
-				break;
+
 
 			}
 
@@ -150,22 +139,22 @@ int current_ripple_buckY = 574;
 
 //Input Voltage
 int inputVX_boost = 5;
-int inputVY_boost = 330;
+int inputVY_boost = 330 + 90;
 //Capacitor
 int inputCX_boost = 517;
-int inputCY_boost = 380;
+int inputCY_boost = 380 + 90;
 //Duty Cycle
 int Duty_CycleX_boost = 195;
-int Duty_CycleY_boost = 381;
+int Duty_CycleY_boost = 381 + 90;
 // Inductor
 int InductorX_boost = 260;
-int InductorY_boost = 195;
+int InductorY_boost = 195 + 90;
 // Resistor
 int ResistorX_boost = 732;
-int ResistorY_boost = 386;
+int ResistorY_boost = 386 + 90;
 // Vout
 int VoutX_boost = 387;
-int VoutY_boost = 785;
+int VoutY_boost = 785 + 90;
 
 int frequency_buckX_boost = 326;
 int frequency_buckY_boost = 536;
@@ -256,7 +245,7 @@ void Windowx::Boost_drawVoltageChangeOption(std::string comp) {
 	if (comp == "Duty_Cycle") {
 		Draw_editbox();
 		// Draw Value String
-		DrawString(300, 295, "Load Resistor:", olc::GREEN);
+		DrawString(300, 295, "Duty Cycle:", olc::GREEN);
 		//Value of Voltage 
 		DrawString(425, 290, Duty_Cycle_Boost, olc::GREEN);
 
@@ -529,7 +518,7 @@ void Windowx::Pressed_number() {
 		}
 		if (Diff_Number != "")
 		{
-			_ChangeValueofVoltage_Boost += Diff_Number;
+			_ChangeValueofcapacitor_Boost += Diff_Number;
 
 
 		}
@@ -687,6 +676,27 @@ void Windowx::Pressed_number() {
 		return;
 
 	}
+	
+		if (buck_cur_ripple) {
+
+			if (GetKey(olc::Key::BACK).bPressed && _ChangeValueofInductor.length() > 0)
+			{
+				if (_buck_cur_ripple_change.length() > 0) {
+					_buck_cur_ripple_change.resize(_buck_cur_ripple_change.length() - 1);
+				}
+
+			}
+			if (Diff_Number != "")
+			{
+				_buck_cur_ripple_change += Diff_Number;
+
+
+			}
+			buck_cur_ripple = false;
+
+			return;
+
+		}
 	if (_Inductor_value) {
 
 		if (GetKey(olc::Key::BACK).bPressed && _ChangeValueofInductor.length() > 0)
@@ -950,6 +960,7 @@ olc::Sprite* sprGFX = nullptr;
 
 Object mn;
 MenuAction menuaction;
+std::string again;
 
 bool Windowx::OnUserCreate()
 {
@@ -963,13 +974,9 @@ bool Windowx::OnUserCreate()
 	_darkBlue = olc::Pixel(0, 0, 128);
 	_neonBlue = olc::Pixel(68, 214, 224);
 	_pink = olc::Pixel(255, 174, 201);
-	_brown = olc::Pixel(200, 124, 55);
 	_blue = olc::Pixel(9, 56, 62);
-	_softGreen = olc::Pixel(200, 240, 200);
-	_softOrange = olc::Pixel(181, 156, 127);
 	_orange = olc::Pixel(255, 164, 0);
 	_green = olc::Pixel(25, 240, 50);
-	_purple = olc::Pixel(137, 207, 240);
 	_White = olc::Pixel(255, 255, 255);
 	sprGFX = new olc::Sprite("cursor.png");
 
@@ -979,7 +986,7 @@ bool Windowx::OnUserCreate()
 	mn["main"]["Fourier Series "].SetID(3);
 	mn["main"]["Exit "].SetID(4);
 	mn.Build();
-	//menuaction.Open(&mn["main"]);
+	again = "menu7";
 
 	Clear(olc::DARK_CYAN);
 
@@ -990,7 +997,6 @@ bool Windowx::OnUserCreate()
 
 std::string sLastAction;
 std::string ssLastAction;
-std::string again;
 std::string sbLastAction;
 
 
@@ -1025,25 +1031,7 @@ std::string result_final;
 std::string second_part;
 std::string buck_inductor;
 std::string first_part;
-/*
-std::string _ChangeValueofVoltage_Boost = "20";
-std::string Duty_Cycle_Boost = "0.5";
-std::string _ChangeValueofcapacitor_Boost = "0.001";
-std::string _ChangeValueofInductor_Boost = "0.008";
-std::string load_resistor_Boost = "10";
-std::string _freq_change_Boost = "1000";
-std::string _Boost_vout_ripple_change_Boost = "0.1";
-std::string _Boost_cur_ripple_change_Boost = "0.1";
-bool _resistor_value_Boost = false;
-bool _VoltageChangeOptionOpen_Boost = false;
-bool _capacitor_value_Boost = false;
-bool _Inductor_value_Boost = false;
-bool _Input_Duty_Cycle_Boost = false;
-bool freq_Boost = false;
-bool Boost_vout_ripple = false;
-bool Boost_cur_ripple = false;
 
-*/
 
 bool menuopen = false;
 bool welcome = false;
@@ -1066,15 +1054,20 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 		}
 
-
 		if (GetKey(olc::Key::UP).bPressed && menuopen) {
 
 			menuaction.OnUp();
 			welcome = true;
 		}
 		if (GetKey(olc::Key::ENTER).bPressed && menuopen) {
-			command = menuaction.OnConfirm();
-			welcome = true;
+
+			menuaction.OnDown();
+			menuaction.OnUp();
+				command = menuaction.OnConfirm();
+				welcome = true;
+				
+			
+			
 		}
 
 		if (GetKey(olc::Key::DOWN).bPressed && menuopen) {
@@ -1131,41 +1124,14 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 
 	}
-	/*
-	// Vout
-	//Input Voltage
-	int inputVX_boost = 5;
-	int inputVY_boost = 330;
-	//Capacitor
-	int inputCX_boost = 517;
-	int inputCY_boost = 380;
-	//Duty Cycle
-	int Duty_CycleX_boost = 195;
-	int Duty_CycleY_boost = 381;
-	// Inductor
-	int InductorX_boost = 260;
-	int InductorY_boost = 195;
-	// Resistor
-	int ResistorX_boost = 732;
-	int ResistorY_boost = 386;
-	// Vout
-	int VoutX_boost = 387;
-	int VoutY_boost = 785;
 
-	int frequency_buckX_boost = 326;
-	int frequency_buckY_boost = 536;
-	int outv_ripple_buckX_boost = 432;
-	int outv_ripple_buckY_boost = 557;
-	int current_ripple_buckX_boost = 459;
-	int current_ripple_buckY_boost = 574;
-
-	*/
 
 	if (again == "menu3") {
 
+		Clear(olc::DARK_CYAN);
 		checkKeyEvent();
-		olc::vf2d positions(100, 100);
-		olc::vf2d calculation_positions(160, 435);
+		olc::vf2d positions(100, 190);
+		olc::vf2d calculation_positions(160, 50);
 		DrawSprite(calculation_positions, Buck_converter_calculation_menu);
 		DrawSprite(positions, Boost_diagram);
 		DrawString(inputVX_boost, inputVY_boost - 30, "Voltage Input:", _orange);
@@ -1174,18 +1140,23 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		DrawString(InductorX_boost, InductorY_boost, "L:", _orange);
 		DrawString(ResistorX_boost, ResistorY_boost - 40, "R:", _orange);
 		DrawString(545, 529, vout_buck, _orange);
+	
 
-		DrawString(InductorX - 236, InductorY, _ChangeValueofInductor_Boost);
-		DrawString(inputCX + 15, inputCY, _ChangeValueofcapacitor_Boost);
-		DrawString(inputVX + 110, inputVY - 30, _ChangeValueofVoltage_Boost);
-		DrawString(ResistorX + 15, ResistorY - 40, load_resistor_Boost);
+		DrawString(InductorX_boost + 15, InductorY_boost, _ChangeValueofInductor_Boost);
+		DrawString(inputCX_boost + 15, inputCY_boost, _ChangeValueofcapacitor_Boost);
+		DrawString(inputVX_boost + 110, inputVY_boost - 28, _ChangeValueofVoltage_Boost);
+		DrawString(ResistorX_boost + 15, ResistorY_boost - 40, load_resistor_Boost);
 		DrawString(Duty_CycleX + 120, Duty_CycleY_boost - 55, Duty_Cycle_Boost);
-		DrawString(frequency_buckX, frequency_buckY - 3, _freq_change_Boost);
-		DrawString(outv_ripple_buckX, outv_ripple_buckY - 3, _Boost_vout_ripple_change_Boost);
-		DrawString(current_ripple_buckX, current_ripple_buckY - 3, _Boost_cur_ripple_change_Boost);
-		// Voltage input edit menu for buck
+		DrawString(325 + 5, 151, _freq_change_Boost);
+		DrawString(429, 170, _Boost_vout_ripple_change_Boost);
+		DrawString(459, 188, _Boost_cur_ripple_change_Boost);
 
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
+		
+
+
+
+		// Voltage input edit menu for buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX_boost + 110, inputVY_boost - 30) < 40)
 		{
 			if (GetMouse(0).bPressed)
 			{
@@ -1196,7 +1167,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		}
 
 		// Boost Vout ripple
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), outv_ripple_buckX_boost + 50, outv_ripple_buckY_boost - 30) < 40)
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 429 + 10, 172) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
@@ -1205,7 +1176,8 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			}
 
 		}
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), current_ripple_buckX_boost + 10, current_ripple_buckY_boost) < 40)
+		// current rippple boost
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 461, 188) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
@@ -1215,6 +1187,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 		}
 
+		// resistor boost
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), ResistorX_boost + 10, ResistorY_boost) < 40)
 		{
 			if (GetMouse(0).bPressed)
@@ -1225,7 +1198,8 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 		}
 
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), Duty_CycleX_boost + 10, Duty_CycleY_boost) < 40)
+		// Boost duty cycle
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 292 + 10, 418) < 40)
 		{
 			if (GetMouse(0).bPressed)
 			{
@@ -1234,7 +1208,8 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			}
 
 		}
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), InductorX_boost - 236, InductorY_boost) < 30)
+		// inductor boost
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 278, 288) < 30)
 		{
 			if (GetMouse(0).bPressed)
 
@@ -1245,6 +1220,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 		}
 
+		// boost capacitor
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputCX_boost + 10, inputCY_boost) < 40)
 		{
 			if (GetMouse(0).bPressed)
@@ -1254,19 +1230,55 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			}
 
 		}
-		// Voltage input edit menu for Boost
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
+
+		// boost freq
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 325 + 10, 151) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
 
-				inputV_menu = true;
-
+				Boost_freq_editMenu = true;
 			}
 
 		}
 
 
+
+
+
+
+	}
+	if (again == "menu3" && _ChangeValueofInductor_Boost.length() > 0 && _ChangeValueofVoltage_Boost.length() > 0 && Duty_Cycle_Boost.length() > 0 && _Boost_cur_ripple_change_Boost.length() > 0 && _Boost_vout_ripple_change_Boost.length() > 0 && _freq_change_Boost.length() > 0) {
+
+		// Calculation for Vout
+		double Boost_duty_cycle = std::stod(Duty_Cycle_Boost);
+		double voutt_boost = std::stod(_ChangeValueofVoltage_Boost);
+		double neo = ((1 / (1 - Boost_duty_cycle))) * voutt_boost;
+		std::ostringstream resultStream;
+		resultStream << std::fixed << std::setprecision(6) << neo;
+		std::string neo_final = resultStream.str();
+		DrawString(542, 147, neo_final, _orange);
+
+		// calculation for L
+		std::string mult = multiplyStrings(_freq_change_Boost, _Boost_cur_ripple_change_Boost, "s");
+		std::string neo_multp1 = multiplyStrings(neo_final, mult, "divide");
+		DrawString(652, 164, neo_multp1, _orange);
+
+
+		// calculation for C
+
+
+
+		double dena = std::stod(_Boost_vout_ripple_change_Boost);
+		double dena2 = std::stod(load_resistor_Boost);
+		double dena3 = std::stod(_freq_change_Boost);
+		double dena4 = std::stod(Duty_Cycle_Boost);
+		double resultss = (neo / dena) * (dena4 / (dena2 * dena3));
+
+		std::ostringstream resultStreams;
+		resultStreams << std::fixed << std::setprecision(6) << resultss;
+		std::string result_f = resultStreams.str();
+		DrawString(659, 181, result_f, _orange);
 
 
 	}
@@ -1279,12 +1291,20 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 
 		cout << "Exit Menu";
+		again = "menu7";
 		return 0;
+
+
+	}
+	if (again == "menu7") {
+		Clear(olc::BLACK);
+		Welcome_Text = new olc::Sprite("Welcome_Start.JPG");
+		olc::vf2d positionsss(100, 50);
+		DrawSprite(positionsss, Welcome_Text);
 
 	}
 	if (again == "menu2") {
-
-		HandleInput();
+		UserInput();
 
 		DrawFourierSeries();
 
@@ -1296,7 +1316,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 
 	if (again == "menu1") {
-
+		
 		checkKeyEvent();
 		olc::vf2d positions(100, 100);
 		olc::vf2d calculation_positions(160, 435);
@@ -1310,11 +1330,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		DrawString(ResistorX, ResistorY - 40, "R:", _orange);
 		DrawString(545, 529, vout_buck, _orange);
 
-		//DrawString(VoutX, VoutY, "Vout:", _orange);
-		//cout << GetMouseX() << " xxxx \n";
-		//cout << GetMouseY() << " yyyy \n";
 
-		//DrawString(inputVX, inputVY - 30, "Calculate Vout:", _orange);
 		DrawString(InductorX + 15, InductorY, _ChangeValueofInductor);
 		DrawString(inputCX + 15, inputCY, _ChangeValueofcapacitor);
 		DrawString(inputVX + 110, inputVY - 30, _ChangeValueofVoltage);
@@ -1323,14 +1339,14 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		DrawString(frequency_buckX, frequency_buckY - 3, _freq_buck_change);
 		DrawString(outv_ripple_buckX, outv_ripple_buckY - 3, _buck_vout_ripple_change);
 		DrawString(current_ripple_buckX, current_ripple_buckY - 3, _buck_cur_ripple_change);
-
-
-		if (_ChangeValueofVoltage.length() > 0 && Duty_Cycle.length() > 0) {
+		
+		if (again == "menu1" && _ChangeValueofVoltage.length() > 0 && Duty_Cycle.length() > 0) {
 			vout_buck = multiplyStrings(Duty_Cycle, _ChangeValueofVoltage, "no");
+			
 
 		}
 		// Calculation for Desired Inductor in a Buck Converter
-		if (_ChangeValueofVoltage.length() > 0 && vout_buck.length() > 0 && Duty_Cycle.length() > 0 && _buck_cur_ripple_change.length() > 0 && _freq_buck_change.length() > 0) {
+		if (again == "menu1" && _ChangeValueofVoltage.length() > 0 && vout_buck.length() > 0 && Duty_Cycle.length() > 0 && _buck_cur_ripple_change.length() > 0 && _freq_buck_change.length() > 0) {
 
 			double buck_duty_cycle = std::stod(Duty_Cycle);
 			double final = (1 - buck_duty_cycle);
@@ -1344,7 +1360,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 		}
 		// Calculation the Desired Capacitor in a Buck Converter
-		if (_ChangeValueofVoltage.length() > 0 && vout_buck.length() > 0 && Duty_Cycle.length() > 0 && _buck_cur_ripple_change.length() > 0 && _freq_buck_change.length() > 0) {
+		if (again == "menu1" && _ChangeValueofVoltage.length() > 0 && vout_buck.length() > 0 && Duty_Cycle.length() > 0 && _buck_cur_ripple_change.length() > 0 && _freq_buck_change.length() > 0) {
 
 
 			double buck_duty_cycle = std::stod(Duty_Cycle);
@@ -1357,7 +1373,6 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			double dena = std::stod(_freq_buck_change);
 			double dena2 = std::stod(_buck_vout_ripple_change);
 			double dena3 = std::stod(_ChangeValueofInductor);
-
 			double resultss = neo / (dena * dena * 8 * dena2 * dena3);
 
 			std::ostringstream resultStreams;
@@ -1369,7 +1384,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		}
 		//////////////BUCK//////////////////////
 		// Calculation for Charge in a Buck Converter
-		if (_ChangeValueofVoltage.length() > 0 && _ChangeValueofcapacitor.length() > 0 && _buck_vout_ripple_change.length() > 0) {
+		if (again == "menu1" && _ChangeValueofVoltage.length() > 0 && _ChangeValueofcapacitor.length() > 0 && _buck_vout_ripple_change.length() > 0) {
 
 
 			std::string charge = multiplyStrings(_ChangeValueofcapacitor, _buck_vout_ripple_change, "percission");
@@ -1377,277 +1392,271 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			DrawString(676, 582, charge, _orange);
 
 		}
+		// Voltage input edit menu Buck
 
-	}
-	// Voltage input edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
-	{
-		if (GetMouse(0).bPressed)
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
 		{
-
-			inputV_menu = true;
-
-		}
-
-	}
-
-	// current ripple buck edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), current_ripple_buckX, current_ripple_buckY) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			buck_cur_ripple_menu = true;
-
-		}
-
-	}
-	// vout ripple buck edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), outv_ripple_buckX, outv_ripple_buckY) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			buck_vout_ripple_menu = true;
-
-		}
-
-	}
-	// frequency buck edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), frequency_buckX, frequency_buckY) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			buck_freq_editMenu = true;
-
-		}
-
-	}
-	// Duty cycle edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), Duty_CycleX + 10, Duty_CycleY) < 40)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			Duty_Cycle_menu = true;
-
-		}
-
-	}
-	// Resistor edit menu Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), ResistorX + 10, ResistorY - 40) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			resistor_menu = true;
-
-		}
-
-	}
-	// Inductor edit menu Buck
-
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), InductorX + 10, InductorY) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			Inductor_menu = true;
-
-		}
-
-	}
-	//capacitor__edit_menu_Buck
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), inputCX + 10, inputCY) < 25)
-	{
-		if (GetMouse(0).bPressed)
-		{
-			capacitor_menu = true;
-			ssLastAction = "value saved";
-
-
-		}
-
-	}
-
-	// buck current ripple menu bool
-	if (buck_cur_ripple_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("buck_cur_ripple");
-
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
-		{
-
 			if (GetMouse(0).bPressed)
 			{
-				buck_cur_ripple_menu = false;
-				cout << "Current Ripple saved\n";
 
+				inputV_menu = true;
 
 			}
 
 		}
 
-	}
-	/// Boost Input voltage
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
-	{
-		if (GetMouse(0).bPressed)
+
+
+		// current ripple buck edit menu Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), current_ripple_buckX, current_ripple_buckY) < 25)
 		{
-
-			_VoltageChangeOptionOpen_Boost = true;
-
-		}
-
-	}
-	/// Boost _Inductor_value_Boost edit box
-	if (Calculate_Distance(GetMouseX(), GetMouseY(), inputVX + 50, inputVY - 30) < 40)
-	{
-		if (GetMouse(0).bPressed)
-		{
-
-			_Inductor_value_Boost = true;
-
-		}
-
-	}
-
-	if (buck_vout_ripple_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("buck_vout_ripple");
-
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
-		{
-
 			if (GetMouse(0).bPressed)
 			{
-				buck_vout_ripple_menu = false;
-				cout << "Vout Ripple saved\n";
+
+				buck_cur_ripple_menu = true;
 
 			}
 
 		}
-
-	}
-	// buck frequncey  menu bool
-	if (buck_freq_editMenu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("buckFrequency");
-
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		// vout ripple buck edit menu Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), outv_ripple_buckX, outv_ripple_buckY) < 25)
 		{
-
 			if (GetMouse(0).bPressed)
 			{
-				buck_freq_editMenu = false;
-				cout << "Frequency saved";
 
+				buck_vout_ripple_menu = true;
 
 			}
 
 		}
-
-	}
-
-
-	// input voltage menu bool
-	if (inputV_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("V_Input");
-
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		// frequency buck edit menu Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), frequency_buckX, frequency_buckY) < 25)
 		{
-
 			if (GetMouse(0).bPressed)
 			{
-				inputV_menu = false;
-				cout << "Input Voltage saved";
 
+				buck_freq_editMenu = true;
 
 			}
 
 		}
-
-	}
-
-	// Resistor menu bool
-	if (resistor_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("Resistor");
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		// Duty cycle edit menu Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), Duty_CycleX + 10, Duty_CycleY) < 40)
 		{
 			if (GetMouse(0).bPressed)
 			{
-				resistor_menu = false;
-				cout << "Load Resistor saved";
+
+				Duty_Cycle_menu = true;
 
 			}
 
 		}
-
-	}
-
-	// duty cycle menu bool
-	if (Duty_Cycle_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("Duty_Cycle");
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		// Resistor edit menu Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), ResistorX + 10, ResistorY - 40) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
-				Duty_Cycle_menu = false;
-				cout << "Duty Cycle value saved";
+
+				resistor_menu = true;
 
 			}
 
 		}
+		// Inductor edit menu Buck
 
-	}
-
-	// Inductor Edit Menu for buck
-	if (Inductor_menu == true) {
-
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("Inductor");
-
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), InductorX + 10, InductorY) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
-				Inductor_menu = false;
+
+				Inductor_menu = true;
+
+			}
+
+		}
+		//capacitor__edit_menu_Buck
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), inputCX + 10, inputCY) < 25)
+		{
+			if (GetMouse(0).bPressed)
+			{
+				capacitor_menu = true;
 				ssLastAction = "value saved";
 
+
 			}
 
 		}
+		
+		// buck current ripple menu bool
+		if (buck_cur_ripple_menu == true) {
 
-	}
-	if (capacitor_menu == true) {
-		Clear(olc::DARK_CYAN);
-		Buck_drawVoltageChangeOption("capacitor");
-		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
-		{
-			if (GetMouse(0).bPressed)
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("buck_cur_ripple");
+
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
 			{
-				;
-				capacitor_menu = false;
 
+				if (GetMouse(0).bPressed)
+				{
+					buck_cur_ripple_menu = false;
+					cout << "Current Ripple saved\n";
+
+
+				}
+
+			}
+		}
+		
+		// buck vout ripple menu bool
+		if (buck_vout_ripple_menu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("buck_vout_ripple");
+
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+
+				if (GetMouse(0).bPressed)
+				{
+					buck_vout_ripple_menu = false;
+					cout << "Vout Ripple saved\n";
+
+
+				}
+
+			}
+		}
+		
+		
+			
+		// buck frequncey  menu bool
+		if (buck_freq_editMenu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("buckFrequency");
+
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+
+				if (GetMouse(0).bPressed)
+				{
+					buck_freq_editMenu = false;
+					cout << "Frequency saved";
+
+
+				}
 
 			}
 
 		}
 
+
+		// input voltage menu bool
+		if (inputV_menu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("V_Input");
+
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+
+				if (GetMouse(0).bPressed)
+				{
+					inputV_menu = false;
+					cout << "Input Voltage saved";
+
+
+				}
+
+			}
+
+		}
+
+		// Resistor menu bool
+		if (resistor_menu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("Resistor");
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+				if (GetMouse(0).bPressed)
+				{
+					resistor_menu = false;
+					cout << "Load Resistor saved";
+
+				}
+
+			}
+
+		}
+
+		// duty cycle menu bool
+		if (Duty_Cycle_menu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("Duty_Cycle");
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+				if (GetMouse(0).bPressed)
+				{
+					Duty_Cycle_menu = false;
+					cout << "Duty Cycle value saved";
+
+				}
+
+			}
+
+		}
+
+		// Inductor Edit Menu for buck
+		if (Inductor_menu == true) {
+
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("Inductor");
+
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+				if (GetMouse(0).bPressed)
+				{
+					Inductor_menu = false;
+					ssLastAction = "value saved";
+
+				}
+
+			}
+
+		}
+		if (capacitor_menu == true) {
+			Clear(olc::DARK_CYAN);
+			Buck_drawVoltageChangeOption("capacitor");
+			if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+			{
+				if (GetMouse(0).bPressed)
+				{
+
+					capacitor_menu = false;
+
+
+				}
+
+			}
+
+		}
+
+
 	}
+
+
+
+	
+
+
+
 
 	/////////////////////Buck////////////////////////////
-	if (_Inductor_value_Boost == true) {
+
+
+	if (Inductor_menu_Boost == true) {
 
 		Clear(olc::DARK_CYAN);
 		Boost_drawVoltageChangeOption("Inductor");
@@ -1656,7 +1665,25 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		{
 			if (GetMouse(0).bPressed)
 			{
-				_Inductor_value_Boost = false;
+				Inductor_menu_Boost = false;
+				ssLastAction = "value saved";
+
+			}
+
+		}
+
+	}
+
+	if (inputV_menu_Boost == true) {
+
+		Clear(olc::DARK_CYAN);
+		Boost_drawVoltageChangeOption("V_Input");
+
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		{
+			if (GetMouse(0).bPressed)
+			{
+				inputV_menu_Boost = false;
 				ssLastAction = "value saved";
 
 			}
@@ -1666,8 +1693,9 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 	}
 
 
+
 	//Boost Capacitor bool
-	if (_capacitor_value_Boost == true) {
+	if (capacitor_menu_Boost == true) {
 		Clear(olc::DARK_CYAN);
 		Boost_drawVoltageChangeOption("capacitor");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
@@ -1675,7 +1703,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			if (GetMouse(0).bPressed)
 			{
 
-				_capacitor_value_Boost = false;
+				capacitor_menu_Boost = false;
 
 
 			}
@@ -1684,7 +1712,8 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 
 	}
-	if (_Input_Duty_Cycle_Boost == true) {
+
+	if (Duty_Cycle_menu_Boost == true) {
 		Clear(olc::DARK_CYAN);
 		Boost_drawVoltageChangeOption("Duty_Cycle");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
@@ -1692,7 +1721,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			if (GetMouse(0).bPressed)
 			{
 
-				_Input_Duty_Cycle_Boost = false;
+				Duty_Cycle_menu_Boost = false;
 
 
 			}
@@ -1717,7 +1746,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 	}
 
-	if (_VoltageChangeOptionOpen_Boost == true) {
+	if (inputV_menu_Boost == true) {
 		Clear(olc::DARK_CYAN);
 		Boost_drawVoltageChangeOption("V_Input");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
@@ -1725,7 +1754,7 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			if (GetMouse(0).bPressed)
 			{
 
-				_VoltageChangeOptionOpen_Boost = false;
+				inputV_menu_Boost = false;
 
 
 			}
@@ -1734,7 +1763,8 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 
 	}
 
-	if (freq_Boost == true) {
+
+	if (Boost_freq_editMenu == true) {
 		Clear(olc::DARK_CYAN);
 		Boost_drawVoltageChangeOption("buckFrequency");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
@@ -1742,7 +1772,24 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 			if (GetMouse(0).bPressed)
 			{
 
-				freq_Boost = false;
+				Boost_freq_editMenu = false;
+
+
+			}
+
+		}
+
+
+	}
+	if (Boost_vout_ripple_menu == true) {
+		Clear(olc::DARK_CYAN);
+		Boost_drawVoltageChangeOption("Boost_vout_ripple");
+		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
+		{
+			if (GetMouse(0).bPressed)
+			{
+
+				Boost_vout_ripple_menu = false;
 
 
 			}
@@ -1750,15 +1797,15 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		}
 
 	}
-	if (Boost_vout_ripple == true) {
+	if (resistor_menu_Boost == true) {
 		Clear(olc::DARK_CYAN);
-		Boost_drawVoltageChangeOption("buck_vout_ripple");
+		Boost_drawVoltageChangeOption("Resistor");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
 
-				Boost_vout_ripple = false;
+				resistor_menu_Boost = false;
 
 
 			}
@@ -1766,15 +1813,15 @@ bool Windowx::OnUserUpdate(float fTimeElapsed)
 		}
 
 	}
-	if (Boost_cur_ripple == true) {
+	if (Boost_cur_ripple_menu == true) {
 		Clear(olc::DARK_CYAN);
-		Boost_drawVoltageChangeOption("buck_cur_ripple");
+		Boost_drawVoltageChangeOption("Boost_cur_ripple");
 		if (Calculate_Distance(GetMouseX(), GetMouseY(), 502 + 10, 323) < 25)
 		{
 			if (GetMouse(0).bPressed)
 			{
 
-				Boost_cur_ripple = false;
+				Boost_cur_ripple_menu = false;
 
 
 			}
@@ -1824,13 +1871,13 @@ void Windowx::DrawFourierSeries() {
 
 		y = ((y + 0.6) / 4 * screen_hight) + 200;
 		// Draw the point
-		Draw(i, y, _orange);
-		// Reset to default 
+		Draw(i, y, _darkBlue);
+		// Reset 
 		sum = complex(0.0, 0.0);
 	}
 }
 
-void Windowx::HandleInput() {
+void Windowx::UserInput() {
 	if (GetKey(olc::Key::RIGHT).bPressed) {
 		// Increase the number of coefficients
 		numCoeffs++;

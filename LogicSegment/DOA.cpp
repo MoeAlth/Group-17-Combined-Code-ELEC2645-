@@ -2,7 +2,6 @@
 #include"Window.h"
 #include<iostream>
 #include <graphics.h>
-#include <conio.h>
 #include <string>
 #include <cmath>
 bool sda = false; //bool to control the simple differential op-amp button
@@ -15,7 +14,7 @@ IMAGE m_ia;  //picture for inverting op-amp gain equation
 IMAGE m_rg;
 IMAGE m_dg;
 DOA::DOA()
-	:Size_parameter(0, 0, 0, 0)
+    :Size_parameter(0, 0, 0, 0)
 {
     Circuit1 = new Buttons("Simple Differential OP-AMP", 0, 0, 300, 40);
     Circuit2 = new Buttons("Instrumentation amplifier", 0, 0, 300, 40);
@@ -159,6 +158,11 @@ void DOA::show()
         k1.Format("%d", num1);*/
         MessageBox(GetHWnd(), s, "The Vout is:", MB_OK);//output the result by messagebox command.
         return;
+    }
+
+    if (Calculator->isClicked())// call the calculator.
+    {
+        system("calc");
     }
 
 }

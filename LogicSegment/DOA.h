@@ -17,11 +17,11 @@ private:
     Buttons* Circuit2;
 
     Buttons* Equation1;
-    Buttons* Equation2; 
+    Buttons* Equation2;
 
     Buttons* Calculation1;
     Buttons* Calculation2;
-    
+
     Buttons* Calculator;
     Buttons* Closegraph;
 

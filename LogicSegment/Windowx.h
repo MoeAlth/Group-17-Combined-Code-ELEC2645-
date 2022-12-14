@@ -111,7 +111,7 @@ public:
 
     Windowx();
 
-    void HandleInput();
+    void UserInput();
 
 
     void DrawFourierSeries();
@@ -131,17 +131,12 @@ private:
 
     olc::Pixel _pink;
     olc::Pixel _White;
-    olc::Pixel _brown;
     olc::Pixel _darkBlue;
     olc::Pixel _neonBlue;
     olc::Pixel _blue;
-    olc::Pixel _softGreen;
-    olc::Pixel _softOrange;
     olc::Pixel _orange;
-    olc::Pixel _green;
-    olc::Pixel _purple;
+
     // Buck Converter
-    std::string s;
     std::string _ChangeValueofVoltage = "20";
     std::string Duty_Cycle = "0.5";
     std::string _ChangeValueofcapacitor = "0.001";
@@ -160,14 +155,14 @@ private:
     bool buck_cur_ripple = false;
     bool _decimal = false;
     // Boost Converter
-    std::string _ChangeValueofVoltage_Boost = "1";
+    std::string _ChangeValueofVoltage_Boost = "20";
     std::string Duty_Cycle_Boost = "0.2";
     std::string _ChangeValueofcapacitor_Boost = "0.002";
     std::string _ChangeValueofInductor_Boost = "0.002";
     std::string load_resistor_Boost = "20";
-    std::string _freq_change_Boost = "300";
+    std::string _freq_change_Boost = "2000";
     std::string _Boost_vout_ripple_change_Boost = "0.12";
-    std::string _Boost_cur_ripple_change_Boost = "0.12";
+    std::string _Boost_cur_ripple_change_Boost = "0.16";
     bool _resistor_value_Boost = false;
     bool _VoltageChangeOptionOpen_Boost = false;
     bool _capacitor_value_Boost = false;
@@ -180,4 +175,3 @@ private:
 };
 
 #endif
-

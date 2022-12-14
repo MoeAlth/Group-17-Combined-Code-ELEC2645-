@@ -16,13 +16,13 @@ using namespace std;
 
 Windowcompli::Windowcompli()
 {
-	
+
 	Readfile("image/sallenkey filter.txt");
 	//set up the main menu back ground:
 	::loadimage(&m_prb, "image/bgk.png", Window::width(), Window::height());
-	
-	
-	
+
+
+
 	//set up the main menu button:
 	menu_btns.push_back(new Buttons("Non-inverting-op-amp"));
 	menu_btns.push_back(new Buttons("Inverting-op-amp"));
@@ -35,9 +35,9 @@ Windowcompli::Windowcompli()
 		menu_btns[i]->setFixsize(250, 50);
 
 		int bx = (Window::width() - menu_btns[i]->width()) / 2;
-		int by =150+ i*menu_btns[i]->height();
+		int by = 150 + i * menu_btns[i]->height();
 
-		menu_btns[i]->move(bx,by);
+		menu_btns[i]->move(bx, by);
 
 	}
 
@@ -53,12 +53,12 @@ Windowcompli::Windowcompli()
 	m_showinverting = new Inverting_op;
 	m_photodiode = new Photodiode;
 	m_DOA = new DOA;
-	
+
 }
 
 void Windowcompli::run()
 {
-	
+
 	int op = Menu;
 	Window::beginDraw();
 	while (true) {
@@ -66,15 +66,15 @@ void Windowcompli::run()
 		Window::clear();
 		probackground();
 
-		
+
 		if (Window::hasMsg()) {
 			m_msg = Window::getMsg();
-			switch (m_msg.message) 
+			switch (m_msg.message)
 			{
 			case WM_KEYDOWN:
 				if (m_msg.vkcode == VK_ESCAPE) {
-					
-					op = Menu;	
+
+					op = Menu;
 				}
 				break;
 			default:
@@ -82,12 +82,12 @@ void Windowcompli::run()
 				break;
 			}
 		}
-		
+
 		switch (op)// in here, the switch command is used to produce the menu choices. and each of them are realted to a sub-menu;
 		{//just same as the function that professor used in the main menu;
 		case Menu:
-				op = menu();
-				break;
+			op = menu();
+			break;
 		case Windowcompli::Non_inverting_calculation:
 
 			Non_inverting_op_amp();
@@ -105,17 +105,16 @@ void Windowcompli::run()
 			Differential_op_amp();
 			break;
 		default:
-			//Savefile("image/filter.txt");
 			closegraph();
 			return;
 			break;
 		}
 
 		Window::flushDraw();
-	
+
 	}
 	Window::endDraw();
-	
+
 }
 
 int Windowcompli::menu()
@@ -125,12 +124,16 @@ int Windowcompli::menu()
 	Window::flushDraw();
 	int op = 0;
 	cin>> op;*/  //TEST PURPOSE ONLY.
-	settextstyle(22, 0, "Arial");//this is used to normalize the size text, 
+	settextstyle(22, 0, "Arial");
+	settextstyle(30, 0, "Arial");//set the text size for the next title.
+	settextcolor(YELLOW);
+	outtextxy(580, 500, "Press any button to start");
+	settextstyle(22, 0, "Arial");
 	//otherwise everytime when people backing from the sub-menu to the main menu, 
 	// the size of the text in the main menu will be changed by the size I set in the sub-menu. 
-		
 
-	
+
+
 	for (auto btn : menu_btns)//
 	{
 		btn->represent();
@@ -155,7 +158,7 @@ int Windowcompli::menu()
 			outtextxy(580, 600, "click button to continue");
 			Sleep(1000);
 		}
-		
+
 	}
 }*/
 
@@ -183,11 +186,11 @@ void Windowcompli::Non_inverting_op_amp()
 	outtextxy(310, 10, "Applications");
 
 	settextstyle(22, 0, "Arial");//set the text size back to normal. 
-	
+
 	m_showfunction->show();
-		
-	
-	
+
+
+
 }
 
 void Windowcompli::Inverting_op_amp()
@@ -211,7 +214,7 @@ void Windowcompli::Inverting_op_amp()
 
 	settextstyle(22, 0, "Arial");//set the text size back to normal. 
 	m_showinverting->show();
-	
+
 }
 
 void Windowcompli::Filters()
@@ -242,7 +245,18 @@ void Windowcompli::Photodiode_circuit()
 
 void Windowcompli::Differential_op_amp()
 {
+	settextstyle(30, 0, "Arial");
+	settextcolor(WHITE);
+	outtextxy(50, 700, "Press 'ESC' to exit");
+
+	settextcolor(YELLOW);
+	outtextxy(800, 0, "Images for Differential_op_amp");
 	outtextxy(0, 0, "Differential_op_amp");
+	outtextxy(420, 120, "Circuit for simple Differential OA");
+	outtextxy(420, 320, "Circuit for instrumentation OA");
+	outtextxy(420, 520, "Equation for Rg");
+	outtextxy(420, 720, "Equation for differential gain");
+	settextstyle(22, 0, "Arial");//set the text size back to normal. 
 	m_DOA->show();
 }
 
@@ -250,7 +264,7 @@ void Windowcompli::Differential_op_amp()
 void Windowcompli::probackground()
 {
 	::putimage(0, 0, &m_prb);
-	
+
 }
 
 void Windowcompli::eventloop()
@@ -292,12 +306,12 @@ void Windowcompli::Readfile(const std::string& FileName)
 /*void Windowcompli::Savefile(const std::string& FileName)
 {
 	fstream write(FileName, ios::out | ios::trunc);//write and create the value.
-	if (!write.is_open()) 
+	if (!write.is_open())
 	{
 		cerr << FileName << "file open failed" << endl;
 		return;
 	}
-    
+
 	//produce file header:
 	m_filters +="\n";
 	write.write(m_filters.c_str(), m_filters.size());
